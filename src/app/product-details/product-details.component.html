@@ -1,0 +1,88 @@
+<!-- 
+{{ product.name }}
+{{ product.price }}
+{{product.categoryName}}
+<img
+        *ngIf="product.image" 
+        [src]="'data:image/png;base64,' + product.image"
+        alt="{{ product.name }}"
+        width="200"
+      />
+<button (click) = "orderfunction()">Order</button>
+
+
+
+ -->
+ <nav class="navbar">
+  <button class="navbar-home" (click)="Home()">Home</button>
+</nav>
+ <div class="product">
+  <img
+    *ngIf="product.image"
+    [src]="'data:image/png;base64,' + product.image"
+    alt="{{ product.name }}"
+    class="product-image"
+  />
+  <div class="product-details">
+    <h3 class="product-name">{{ product.name }}</h3>
+    <p class="product-price">{{ product.price}}</p>
+    <p class="product-category">{{ product.categoryName }}</p>
+  </div>
+  <button (click)="orderfunction()" class="order-button">Order</button>
+</div>
+
+<style>
+  .product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    margin: 20px;
+    text-align: center;
+  }
+
+  .product-image {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+
+  .product-details {
+    margin-bottom: 15px;
+  }
+
+  .product-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin: 5px 0;
+  }
+
+  .product-price {
+    font-size: 1.1rem;
+    color: #e74c3c;
+    margin: 5px 0;
+  }
+
+  .product-category {
+    font-size: 0.9rem;
+    color: #777;
+  }
+
+  .order-button {
+    padding: 10px 20px;
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .order-button:hover {
+    background-color: #27ae60;
+  }
+</style>
+
