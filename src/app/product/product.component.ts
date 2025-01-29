@@ -36,6 +36,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
   categoryId!: string | null;
+  userName!: string | null;
   products: any[] = [];
   currentPage = 1;
   pageSize = 2;
@@ -51,6 +52,8 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
    
     this.categoryId = this.router.snapshot.paramMap.get('name');
+    this.userName = this.router.snapshot.paramMap.get('userName');
+
     if (this.categoryId) {
       this.loadProducts();
     }
@@ -73,7 +76,7 @@ export class ProductComponent implements OnInit {
 
   productfunction(product: any) {
    
-    this.route.navigate(['product-detail', product.name]);
+    this.route.navigate(['product-detail', product.name,this.userName]);
   }
 
   previousPage() {

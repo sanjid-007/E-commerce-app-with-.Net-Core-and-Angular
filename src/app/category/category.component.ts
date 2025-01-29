@@ -36,7 +36,7 @@ export class CategoryComponent {
     console.log(category.name);
     if(category.name != null) {
       
-    this.router.navigate(['product', category.name]);
+    this.router.navigate(['product', category.name,this.userName]);
   }
   } 
   Home() {

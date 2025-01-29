@@ -20,6 +20,7 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { OrderComponent } from './order/order.component';
 import { PaymentComponent } from './payment/payment.component';
+import { CartComponent } from './cart/cart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +36,8 @@ import { PaymentComponent } from './payment/payment.component';
     BreadcrumbComponent,
     ProductDetailsComponent,
     OrderComponent,
-    PaymentComponent
+    PaymentComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

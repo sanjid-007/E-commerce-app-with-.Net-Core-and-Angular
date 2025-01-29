@@ -12,6 +12,7 @@ import { CategoryComponent } from './category/category.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { OrderComponent } from './order/order.component';
 import { PaymentComponent } from './payment/payment.component';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
   {path : '', component : HomeComponent},
@@ -22,13 +23,15 @@ const routes: Routes = [
   {path : 'signin', component : SigninComponent },
   {path : 'signin-admin', component : SigninAdminComponent },
   {path : 'product', component : ProductComponent },
-  { path: 'product/:name', component: ProductComponent }, 
+  { path: 'product/:name/:userName', component: ProductComponent }, 
   {path : 'product-admin', component : ProductAdminComponent },
   {path : 'category/:name', component : CategoryComponent },
   {path : 'category', component : CategoryComponent },
-  {path : 'product-detail/:name', component : ProductDetailsComponent},
+  {path : 'product-detail/:name/:userName', component : ProductDetailsComponent},
   {path : 'order', component : OrderComponent},
-  {path : 'payment', component : PaymentComponent}
+  {path : 'payment', component : PaymentComponent},
+  {path : 'cart/:name/:userName', component : CartComponent},
+  {path : 'cart/:userName', component : CartComponent}
 ];
 
 @NgModule({

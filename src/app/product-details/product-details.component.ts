@@ -18,15 +18,20 @@ export class ProductDetailsComponent {
   // }
 
   productName!: string | null;
+  userName!: string | null;
   product:any;
   constructor(private http: HttpClient, private router: ActivatedRoute, private route: Router) {}
     ngOnInit() {
      
       this.productName = this.router.snapshot.paramMap.get('name');
+      this.userName = this.router.snapshot.paramMap.get('userName');
+
       console.log("id "+this.productName);
       this.http.get<any>('https://localhost:7116/api/Product/' + this.productName).subscribe((response: any) => {
         console.log(response);
         this.product = response;
+        console.log(this.product.name);
+
       });
     }
    orderfunction(){
@@ -36,6 +41,12 @@ export class ProductDetailsComponent {
    Home() {
     this.route.navigate(['home']);
   } 
-   
+   addtocart(){
+    console.log(this.product.name);
+    this.route.navigate(['cart',this.product.name, this.userName]);
+   }
+   carthistory(){
+    this.route.navigate(['cart',this.userName]);
+   }
 
 }
