@@ -19,13 +19,19 @@ export class CartComponent {
      
     this.productName = this.router.snapshot.paramMap.get('name');
     this.userName = this.router.snapshot.paramMap.get('userName');
-    console.log("id "+this.productName);
+    console.log("id "+this.productName + " " + this.userName);
+    const productCart = {
+      userName : this.userName,
+      productName : this.productName,
+      quantity : "1"
+     };
     if(this.productName != null){
     this.http.get<any>('https://localhost:7116/api/Product/' + this.productName).subscribe((response: any) => {
       console.log("hello" + response.name);
       this.product = response;
-         
-      this.http.post('https://localhost:7116/api/Cart', this.product).subscribe({
+      
+     
+      this.http.post('https://localhost:7116/api/Cart', productCart).subscribe({
         next: (response: any) => {
           alert('Product added to Cart successfully!');
         },
@@ -35,9 +41,20 @@ export class CartComponent {
     });
   }
   else{
-    this.http.get<any>('https://localhost:7116/api/Cart').subscribe((response: any) => {
+    this.http.get<any>('https://localhost:7116/api/Cart/' + this.userName).subscribe((response: any) => {
       console.log(response);
       this.products = response;
+
+
+      this.products.forEach((item: any) => {
+        item.productDetails.price = parseFloat(item.productDetails.price);
+        item.quantity = parseInt(item.quantity, 10);
+        item.netPrice = item.productDetails.price * item.quantity; 
+      });
+
+
+
+
     });
   }
 
@@ -49,15 +66,41 @@ export class CartComponent {
  Home() {
   this.route.navigate(['home']);
 } 
-   removeFromCart(productId : any){
-    console.log(productId);
+   
+   getTotalPrice() {
+    let total = 0;
+    this.products.forEach((item: any) => {
+      total+= item.netPrice;
+    });
+    
+    return total;
+  }
+
+  decreaseQuantity(product: any) {
+    if (product.quantity > 1) {
+      product.quantity--;
+      this.http.post('https://localhost:7116/api/Cart', { 
+        userName: this.userName, 
+        productName: product.productDetails.name, 
+        quantity: "-1" 
+      }).subscribe({
+        next: (response: any) => console.log('Quantity decreased'),
+        error: (err) => alert('Failed to update cart'),
+      });
+    } else {
+     
+      this.removeFromCart(product.id);
+    }
+   
+  }
+  
+  removeFromCart(productId: any) {
     this.http.delete('https://localhost:7116/api/Cart/' + productId).subscribe({
       next: (response: any) => {
         alert('Product removed from Cart successfully!');
+        this.products = this.products.filter((item: any) => item.id !== productId);
       },
-      error: (err) =>  alert('Register failed'),
+      error: (err) => alert('Failed to remove product from cart'),
     });
-
-   }
- 
+  }
 }

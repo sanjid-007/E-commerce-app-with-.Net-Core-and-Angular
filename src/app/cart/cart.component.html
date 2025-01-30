@@ -1,4 +1,4 @@
-<div class="cart-container">
+<!-- <div class="cart-container">
     <h2>Your Cart</h2>
   
     <div *ngIf="products.length > 0; else emptyCart">
@@ -6,16 +6,17 @@
         <thead>
           <tr>
             <th>Product Name</th>
-            <th>Price</th>
+            
             <th>Quantity</th>
-            <th>Action</th>
+           
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let product of products">
-            <td>{{ product.name }}</td>
-            <td>{{ product.price | currency }}</td>
+            <td>{{ product.productName }}</td>
+      
             <td>{{ product.quantity }}</td>
+            <td>{{ product.price }}</td>
             <td>
               <button (click)="removeFromCart(product.id)">Remove</button>
             </td>
@@ -30,5 +31,54 @@
   
     <button (click)="orderfunction()">Proceed to Order</button>
     <button (click)="Home()">Continue Shopping</button>
+  </div> -->
+
+  <!-- <h2>Your Cart</h2>
+<ul>
+  <li *ngFor="let product of products">
+    
+    
+   
+   
+    {{ product.productDetails.name}}
+       {{ product.productDetails.price }}
+       {{ product.quantity }}
+      
+      
+      <img
+        *ngIf="product.productDetails.image"
+        [src]="'data:image/png;base64,' + product.productDetails.image"
+        alt="{{ product.productDetails.name }}"
+        width="200"
+      />
+  
+
+    
+  </li>
+</ul> -->
+
+<div *ngFor="let item of products">
+  <div>
+    <p>{{ item.productDetails.name }} ({{ item.quantity }})</p>
+    <p>Price: {{ item.productDetails.price}}</p>
+    <!-- <p>Net Price: {{ parseFloat(item.productDetails.price) * item.quantity}}</p> -->
+    <p>Net Price Of this product: {{item.netPrice }}</p>
+    <img
+        *ngIf="item.productDetails.image"
+        [src]="'data:image/png;base64,' + item.productDetails.image"
+        alt="{{ item.productDetails.name }}"
+        width="200"
+      />
+      <button (click)="decreaseQuantity(item)">-</button>
+      <button (click)="removeFromCart(item.id)">Remove</button>
+      
   </div>
+</div>
+
+
+<h3>Total Price: {{ getTotalPrice() }}</h3> 
+
+
+
+
   
