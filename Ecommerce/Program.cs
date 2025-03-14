@@ -1,7 +1,10 @@
 using Ecommerce.Model;
 using Ecommerce.Services;
 using MongoDB.Driver;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -19,6 +22,67 @@ builder.Services.AddSingleton<IMongoClient, MongoClient>(
 builder.Services.AddSingleton<CategoryService>();
 builder.Services.AddSingleton<ProductService>();
 builder.Services.AddSingleton<UserService>();
+builder.Services.AddSingleton<JwtService>(sp =>
+{
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    var key = configuration["JwtConfig:Key"]; // Ensure this matches appsettings.json
+    return new JwtService(key);
+});
+//builder.Services.AddSingleton<JwtService>();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ecommerce API", Version = "v1" });
+
+    // Add Security Definition
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter 'Bearer' followed by a space and the JWT token.\nExample: Bearer your_token_here"
+    });
+
+    // Add Security Requirement
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = builder.Configuration["JwtConfig:Issuer"],
+        ValidAudience = builder.Configuration["JwtConfig:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtConfig:Key"])),
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true
+    };
+});
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -30,7 +94,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

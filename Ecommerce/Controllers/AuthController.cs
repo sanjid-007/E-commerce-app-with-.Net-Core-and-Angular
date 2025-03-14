@@ -1,5 +1,6 @@
 ﻿using Ecommerce.Model;
 using Ecommerce.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,16 +11,24 @@ namespace Ecommerce.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserService _userService;
-        public AuthController(UserService userservice)
+        private readonly JwtService _jwtService;
+        public AuthController(UserService userservice , JwtService jwtService)
         {
             _userService = userservice;
+            _jwtService = jwtService;
         }
         [HttpPost("register/Customer")]
         public async Task<IActionResult> RegisterCustomer([FromBody] User user)
         {
+            
             user.Role = "Customer";
             await _userService.CreateUser(user);
-            return Ok();
+            User userr = await _userService.GetUser(user.Name, user.Password);
+           
+            var jwt = _jwtService.Generate(userr.Id);
+            return Ok(jwt);
+
+
         }
         [HttpPost("register/Admin")]
         public async Task<IActionResult> RegisterAdmin([FromBody] User user)
@@ -49,12 +58,14 @@ namespace Ecommerce.Controllers
             return Ok();
         }
         [HttpGet("all")]
-
+        [Authorize]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _userService.GetUsers();
             return Ok(users);
         }
+
+       
 
 
 

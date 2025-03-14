@@ -15,6 +15,11 @@ namespace Ecommerce.Services
         }
         public async Task CreateUser(User user)
         {
+            if (await _users.Find(u => u.Name == user.Name).FirstOrDefaultAsync() != null)
+            {
+                throw new Exception("User already exists");
+            }
+
             await _users.InsertOneAsync(user);
         }
         public async Task<User> GetUser(string username, string password)

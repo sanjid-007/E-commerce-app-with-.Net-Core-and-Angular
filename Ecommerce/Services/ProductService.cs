@@ -18,7 +18,7 @@ namespace Ecommerce.Services
         }
         public async Task CreateProduct(Product product)
         {
-           var category = await _categories.GetCategory(product.CategoryName);
+            var category = await _categories.GetCategory(product.CategoryName);
             if (category == null)
             {
                 throw new Exception("Category not found");
