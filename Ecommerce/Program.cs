@@ -22,14 +22,31 @@ builder.Services.AddSingleton<IMongoClient, MongoClient>(
 builder.Services.AddSingleton<CategoryService>();
 builder.Services.AddSingleton<ProductService>();
 builder.Services.AddSingleton<UserService>();
+builder.Services.AddSingleton<CartService>();
 builder.Services.AddSingleton<JwtService>(sp =>
 {
     var configuration = sp.GetRequiredService<IConfiguration>();
     var key = configuration["JwtConfig:Key"]; // Ensure this matches appsettings.json
     return new JwtService(key);
 });
-//builder.Services.AddSingleton<JwtService>();
 
+//builder.Services.AddSingleton<JwtService>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", policy =>
+    {
+        policy.AllowAnyOrigin()   // Allow requests from any origin
+              .AllowAnyMethod()   // Allow all HTTP methods (GET, POST, etc.)
+              .AllowAnyHeader();  // Allow any headers
+    });
+    // You can create other policies for specific needs
+    options.AddPolicy("SpecificOrigins", policy =>
+    {
+        policy.WithOrigins("https://example.com", "https://anotherdomain.com") // Specific origins
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ecommerce API", Version = "v1" });
@@ -92,7 +109,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

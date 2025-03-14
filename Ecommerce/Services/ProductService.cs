@@ -42,9 +42,20 @@ namespace Ecommerce.Services
             await _products.DeleteOneAsync(p => p.Name == name);
         }
 
-        public async Task<List<Product>> GetProductsByCategory(string categoryName)
+        //public async Task<List<Product>> GetProductsByCategory(string categoryName)
+        //{
+        //    return await _products.Find(p => p.CategoryName == categoryName).ToListAsync();
+        //}
+        public async Task<(List<Product>, long)> GetProductsByCategory(string categoryName, int page, int pageSize)
         {
-            return await _products.Find(p => p.CategoryName == categoryName).ToListAsync();
+            var skip = (page - 1) * pageSize;
+            var products = await _products.Find(p => p.CategoryName == categoryName)
+                .Skip(skip)
+                .Limit(pageSize)
+                .ToListAsync();
+
+            var totalCount = await _products.CountDocumentsAsync(p => p.CategoryName == categoryName);
+            return (products, totalCount);
         }
 
     }

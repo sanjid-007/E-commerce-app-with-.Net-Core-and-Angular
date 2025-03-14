@@ -14,5 +14,8 @@ namespace Ecommerce.Model
         public string Name { get; set; }
 
         public string price { get; set; }
+
+        [BsonElement("Image")]
+        public byte[]? Image { get; set; }
     }
 }

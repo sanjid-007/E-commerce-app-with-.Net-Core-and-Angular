@@ -23,10 +23,8 @@ namespace Ecommerce.Controllers
             
             user.Role = "Customer";
             await _userService.CreateUser(user);
-            User userr = await _userService.GetUser(user.Name, user.Password);
-           
-            var jwt = _jwtService.Generate(userr.Id);
-            return Ok(jwt);
+            
+            return Ok();
 
 
         }
@@ -45,7 +43,10 @@ namespace Ecommerce.Controllers
             {
                 return Unauthorized();
             }
-            return Ok();
+            User userr = await _userService.GetUser(user.Name, user.Password);
+
+            var jwt = _jwtService.Generate(userr.Id, userr.Role);
+            return Ok(jwt);
         }
         [HttpPost("login/Admin")]
         public async Task<IActionResult> LoginAdmin([FromBody] User user)
@@ -55,10 +56,13 @@ namespace Ecommerce.Controllers
             {
                 return Unauthorized();
             }
-            return Ok();
+            User userr = await _userService.GetUser(user.Name, user.Password);
+
+            var jwt = _jwtService.Generate(userr.Id, userr.Role);
+            return Ok(jwt);
         }
         [HttpGet("all")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _userService.GetUsers();

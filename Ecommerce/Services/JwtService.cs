@@ -12,7 +12,7 @@ namespace Ecommerce.Services
         {
             this.key = key;
         }
-        public string Generate(string userId)
+        public string Generate(string userId, string role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(key);
@@ -25,7 +25,8 @@ namespace Ecommerce.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-            new Claim(ClaimTypes.Name, userId.ToString())
+            new Claim(ClaimTypes.Name, userId.ToString()),
+            new Claim(ClaimTypes.Role, role)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 Issuer = issuer,
