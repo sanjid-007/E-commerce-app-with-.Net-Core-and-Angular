@@ -44,7 +44,7 @@ namespace Ecommerce.Services
 
         public async Task<List<Cart>> GetCartByUser(string userName)
         {
-
+          
             return await _carts.Find(cart => cart.UserName == userName).ToListAsync();
         }
         public async Task updateCart(Cart cart)
@@ -63,14 +63,11 @@ namespace Ecommerce.Services
                    
                 }
 
-                existingCart.Quantity = updatedQuantity.ToString();
+                
+                var update = Builders<Cart>.Update.Set(c => c.Quantity, updatedQuantity.ToString());
+                await _carts.UpdateOneAsync(c => c.Id == existingCart.Id, update);
 
-
-                await _carts.ReplaceOneAsync(c => c.Id == existingCart.Id, existingCart);
-                //var update = Builders<Cart>.Update.Set(c => c.Quantity, updatedQuantity.ToString());
-                //await _carts.UpdateOneAsync(c => c.Id == existingCart.Id, update);
-
-
+                
             }
             else
             {
@@ -79,10 +76,6 @@ namespace Ecommerce.Services
                 await _carts.InsertOneAsync(cart);
                
             }
-        }
-        public async Task DeleteCart(string id)
-        {
-            await _carts.DeleteOneAsync(c => c.Id == id);
         }
 
 

@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
-using Ecommerce.Middleware;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -115,7 +113,6 @@ app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseMiddleware<TokenValidationMiddleware>();
 
 app.MapControllers();
 

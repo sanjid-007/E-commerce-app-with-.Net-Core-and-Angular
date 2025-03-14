@@ -52,18 +52,11 @@ namespace Ecommerce.Controllers
             return Ok(carts);
         }
 
-        [HttpPost("cart")]
+        [HttpPost("{cart}")]
         public async Task<IActionResult> UpdateCart(Cart cart)
         {
             await _cartService.updateCart(cart);
             return Ok(new { Message = "Product added to cart successfully!" });
-        }
-        [HttpDelete("{cartid}")]
-        public async Task<IActionResult> DeleteCart(string cartid)
-        {
-            
-            await _cartService.DeleteCart(cartid);
-            return Ok(new { Message = "Product removed from cart successfully!" });
         }
 
     }

@@ -26,20 +26,6 @@ namespace Ecommerce.Services
         {
             return await _categories.Find(c => true).ToListAsync();
         }
-
-        public async Task<(List<Category>, long)> GetCategoriesByPage( int page, int pageSize)
-        {
-            var skip = (page - 1) * pageSize;
-            var category = await _categories.Find(p => true)
-                .Skip(skip)
-                .Limit(pageSize)
-                .ToListAsync();
-
-            var totalCount = await _categories.CountDocumentsAsync(p => true);
-            return (category, totalCount);
-        }
-
-
         public async Task<Category> GetCategory(string name)
         {
             return await _categories.Find(c => c.Name == name).FirstOrDefaultAsync();

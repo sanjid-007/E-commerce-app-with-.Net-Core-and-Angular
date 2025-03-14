@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using Ecommerce.Model;
+﻿using Ecommerce.Model;
 using Ecommerce.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +12,6 @@ namespace Ecommerce.Controllers
     {
         private readonly UserService _userService;
         private readonly JwtService _jwtService;
-        private static readonly ConcurrentDictionary<string, bool> BlacklistedTokens = new ConcurrentDictionary<string, bool>();
         public AuthController(UserService userservice , JwtService jwtService)
         {
             _userService = userservice;
@@ -71,20 +69,7 @@ namespace Ecommerce.Controllers
             return Ok(users);
         }
 
-
-        [HttpPost("logout")]
-        [Authorize]
-        public IActionResult Logout()
-        {
-            var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            if (token != null)
-            {
-                BlacklistedTokens.TryAdd(token, true);  // Add token to blacklist
-            }
-
-            return Ok(new { Message = "Logged out successfully" });
-        }
-
+       
 
 
 

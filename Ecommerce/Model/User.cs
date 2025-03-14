@@ -11,13 +11,7 @@ namespace Ecommerce.Model
 
         public string Name { get; set; }
 
-        public string? Password { get; set; }
-
-        public string? Email { get; set; }  // New Field
-
-        public string? Address { get; set; }  // New Field
-
-        public string? Phone { get; set; }  // New Field
+        public string Password { get; set; }
 
         public string? Role { get; set; }
     }
