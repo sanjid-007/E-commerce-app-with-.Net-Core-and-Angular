@@ -1,0 +1,16 @@
+
+<!-- <ul>
+    <li *ngFor="let cate of products">
+      <button> {{ cate.name }}</button> <br>
+    </li>
+  </ul> -->
+
+  <section class="product-section">
+    <h2 class="text-center text-primary">Products</h2>
+    <ul class="product-list">
+      <li *ngFor="let cate of products" class="product-item">
+        <button class="product-button">{{ cate.name }}</button>
+      </li>
+    </ul>
+  </section>
+  

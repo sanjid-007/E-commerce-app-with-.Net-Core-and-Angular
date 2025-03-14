@@ -1,0 +1,41 @@
+<div>
+  <nav class="navbar">
+    <span class="navbar-username">{{ userName }}</span>
+    <button class="navbar-home" (click)="Home()">Home</button>
+  </nav>
+
+  <section class="category-section">
+    <h2 class="text-center text-light">Categories</h2>
+
+    <!-- Search Box -->
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Search categories..."
+        class="search-input"
+        (input)="filterCategories()"
+      />
+      <div *ngIf="filteredCategories.length > 0 && searchTerm" class="dropdown">
+        <button
+          *ngFor="let category of filteredCategories"
+          class="dropdown-item"
+          (click)="onSelect(category)"
+        >
+          {{ category.name }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Scrollable List of Categories -->
+    <ul class="category-list">
+      <li
+        *ngFor="let cate of categories"
+        (click)="onSelect(cate)"
+        class="category-item"
+      >
+        <button class="category-button">{{ cate.name }}</button>
+      </li>
+    </ul>
+  </section>
+</div>
