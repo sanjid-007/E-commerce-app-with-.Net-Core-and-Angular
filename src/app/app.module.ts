@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -21,6 +21,11 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { OrderComponent } from './order/order.component';
 import { PaymentComponent } from './payment/payment.component';
 import { CartComponent } from './cart/cart.component';
+import { CategoryAdminComponent } from './category-admin/category-admin.component';
+import { AdminControlComponent } from './admin-control/admin-control.component';
+import { ProfileComponent } from './profile/profile.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,13 +42,17 @@ import { CartComponent } from './cart/cart.component';
     ProductDetailsComponent,
     OrderComponent,
     PaymentComponent,
-    CartComponent
+    CartComponent,
+    CategoryAdminComponent,
+    AdminControlComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
 
   ],
   providers: [

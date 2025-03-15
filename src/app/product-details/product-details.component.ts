@@ -20,9 +20,13 @@ export class ProductDetailsComponent {
   productName!: string | null;
   userName!: string | null;
   product:any;
+  isAvatarMenuOpen = false;
   constructor(private http: HttpClient, private router: ActivatedRoute, private route: Router) {}
     ngOnInit() {
-     
+      if (!localStorage.getItem('token')) {
+        this.route.navigate(['home']); // Redirect to home if not logged in
+        return; // Stop further execution
+      }
       this.productName = this.router.snapshot.paramMap.get('name');
       this.userName = this.router.snapshot.paramMap.get('userName');
 
@@ -39,7 +43,7 @@ export class ProductDetailsComponent {
    }
 
    Home() {
-    this.route.navigate(['home']);
+    this.route.navigate(['category',this .userName]);
   } 
    addtocart(){
     console.log(this.product.name);
@@ -48,5 +52,26 @@ export class ProductDetailsComponent {
    carthistory(){
     this.route.navigate(['cart',this.userName]);
    }
+   toggleAvatarMenu() {
+    this.isAvatarMenuOpen = !this.isAvatarMenuOpen;
+    console.log('Avatar menu toggled:', this.isAvatarMenuOpen);
+  }
+
+  goToProfile() {
+    // Navigate to the user's profile page
+  }
+  logoClicked(){
+    this.route.navigate(['category',this .userName]);
+  }
+  logout() {
+    this.http.post('https://localhost:7116/api/Auth/logout', {}).subscribe(() => {
+      localStorage.removeItem('token'); // Remove token
+      // this.categories = []; // Clear categories immediately
+      // this.filteredCategories = [];
+      this.route.navigate(['home']).then(() => {
+        window.location.reload(); // Force UI update
+      });
+    });
+  }
 
 }

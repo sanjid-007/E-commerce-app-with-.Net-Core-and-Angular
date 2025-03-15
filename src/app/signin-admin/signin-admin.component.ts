@@ -17,7 +17,7 @@ export class SigninAdminComponent {
             console.log(response.body);
             if (response.status === 200) {
               localStorage.setItem('token', response.body);
-              this.router.navigate(['product-admin']);
+              this.router.navigate(['admin-control']);
             } else {
               alert('Register failed');
             }

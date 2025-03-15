@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
   templateUrl: './breadcrumb.component.html',
 })
 export class BreadcrumbComponent {
-  get breadcrumbs(): string[] {
-    return this.router.url.split('/').filter((part) => part);
-  }
+  // get breadcrumbs(): string[] {
+  //   return this.router.url.split('/').filter((part) => part);
+  // }
 
-  constructor(private router: Router) {}
+  // constructor(private router: Router) {}
 }

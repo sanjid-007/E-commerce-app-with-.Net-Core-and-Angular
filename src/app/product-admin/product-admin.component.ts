@@ -27,7 +27,7 @@ export class ProductAdminComponent {
       alert('Please select an image.');
       return;
     }
-
+    
    
     const formData = new FormData();
     formData.append('name', this.product.name);
