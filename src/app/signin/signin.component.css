@@ -1,169 +1,94 @@
-/* Set up full-screen flexbox for centering */
 :host {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(to bottom right, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
-  background-size: 400% 400%;
-  animation: backgroundAnimation 15s infinite;
-  font-family: 'Roboto', sans-serif;
-}
-
-/* Background animation */
-@keyframes backgroundAnimation {
-  0% {
-    background-position: 0% 50%;
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    box-sizing: border-box;
   }
-  50% {
-    background-position: 100% 50%;
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    z-index: 1000; 
   }
-  100% {
-    background-position: 0% 50%;
+  
+  .navbar-home {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
   }
-}
-
-/* Section container */
-.section-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-/* Floating shapes */
-.section-container::before,
-.section-container::after {
-  content: '';
-  position: absolute;
-  width: 250px;
-  height: 250px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 50%;
-  animation: floatingShapes 12s ease-in-out infinite;
-}
-
-.section-container::before {
-  top: 10%;
-  left: 5%;
-}
-
-.section-container::after {
-  bottom: 10%;
-  right: 5%;
-}
-
-/* Shape animation */
-@keyframes floatingShapes {
-  0%, 100% {
-    transform: translateY(0);
+  
+  .navbar-home:hover {
+    background-color: #45a049;
   }
-  50% {
-    transform: translateY(-30px);
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 80px; /* Add space at the top for the navbar */
   }
-}
-
-/* Form card */
-.form-card {
-  background: linear-gradient(145deg, #ffffff, #e6e6e6);
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  width: 400px;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Form card inner background effect */
-.form-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle, rgba(0, 123, 255, 0.1), transparent);
-  z-index: -1;
-}
-
-/* Title */
-.form-title {
-  font-size: 26px;
-  text-align: center;
-  color: #007bff;
-  margin-bottom: 20px;
-  animation: fadeIn 1.5s ease-in-out;
-}
-
-/* Fade-in animation */
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px);
+  
+  .form-group {
+    margin-bottom: 20px;
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+  
+  label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
   }
-}
-
-/* Input group */
-.input-group {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 5px;
-  margin-bottom: 15px;
-  transition: box-shadow 0.3s;
-}
-
-.input-group:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.input-group-text {
-  background: #f0f0f0;
-  padding: 10px;
-  border-right: 1px solid #ccc;
-}
-
-.form-control {
-  border: none;
-  flex-grow: 1;
-  padding: 10px;
-}
-
-.form-control:focus {
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-/* Button styles */
-.btn-submit {
-  width: 100%;
-  padding: 12px;
-  background: linear-gradient(90deg, #36d1dc, #5b86e5);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.btn-submit:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Responsive design */
-@media (max-width: 576px) {
-  .form-card {
-    width: 90%;
+  
+  .form-input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
   }
-
-  .form-title {
-    font-size: 22px;
+  
+  .form-input:focus {
+    border-color: #4CAF50;
+    outline: none;
   }
-}
+  
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .submit-button:hover:enabled {
+    background-color: #45a049;
+  }
+  

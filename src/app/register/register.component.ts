@@ -18,14 +18,23 @@ export class RegisterComponent {
       this.http.post('https://localhost:7116/api/Auth/register/Customer', {Name: this.username, Password: this.password}, { observe: 'response', responseType: 'text' }).subscribe((response : any) => {
         console.log(response);
         if (response.status === 200) {
+          alert('Register Successfull');
           this.router.navigate(['/signin']);
         } else {
           console.log(response.status);
           alert('Register failed');
         }
-      });
+      },
+      (error) => {
+        console.log(error);
+        alert('Register failed');
+      }
+    );
         
    }
+   Home() {
+    this.router.navigate(['home']);
+  } 
    
 
 }

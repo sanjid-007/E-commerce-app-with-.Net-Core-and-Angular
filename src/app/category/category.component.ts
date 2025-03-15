@@ -15,7 +15,7 @@ export class CategoryComponent {
   constructor(private http: HttpClient , private router: Router, private route: ActivatedRoute) {}
   ngOnInit() {
     this.userName = this.route.snapshot.paramMap.get('name');
-   // console.log("id "+this.userId);
+   
     this.http.get<any[]>('https://localhost:7116/api/Category').subscribe((response: any) => {
       console.log(response);
       this.categories = response;
@@ -23,20 +23,20 @@ export class CategoryComponent {
     });
   }   
   filterCategories() {
-    // Filter the categories based on the search term
+    
     if (this.searchTerm.trim()) {
       this.filteredCategories = this.categories.filter((category: { name: string }) =>
         category.name.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     } else {
-      this.filteredCategories = [...this.categories]; // Show all categories when search is empty
+      this.filteredCategories = [...this.categories]; 
     }
   } 
   onSelect(category: any) {
     console.log(category.name);
     if(category.name != null) {
       
-    this.router.navigate(['product', category.name]);
+    this.router.navigate(['product', category.name,this.userName]);
   }
   } 
   Home() {

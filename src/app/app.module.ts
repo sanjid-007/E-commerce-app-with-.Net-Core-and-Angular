@@ -16,6 +16,11 @@ import { ProductComponent } from './product/product.component';
 import { ProductAdminComponent } from './product-admin/product-admin.component';
 import { AuthInterceptor } from './auth.interceptor';
 import { CategoryComponent } from './category/category.component';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import { OrderComponent } from './order/order.component';
+import { PaymentComponent } from './payment/payment.component';
+import { CartComponent } from './cart/cart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +32,12 @@ import { CategoryComponent } from './category/category.component';
     SigninAdminComponent,
     ProductComponent,
     ProductAdminComponent,
-    CategoryComponent
+    CategoryComponent,
+    BreadcrumbComponent,
+    ProductDetailsComponent,
+    OrderComponent,
+    PaymentComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

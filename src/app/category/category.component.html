@@ -1,13 +1,14 @@
+<nav class="navbar">
+  <span class="navbar-username">{{ userName }}</span>
+  <button class="navbar-home" (click)="Home()">Home</button>
+</nav>
+
 <div>
-  <nav class="navbar">
-    <span class="navbar-username">{{ userName }}</span>
-    <button class="navbar-home" (click)="Home()">Home</button>
-  </nav>
 
   <section class="category-section">
     <h2 class="text-center text-light">Categories</h2>
 
-    <!-- Search Box -->
+   
     <div class="search-box">
       <input
         type="text"
@@ -27,7 +28,9 @@
       </div>
     </div>
 
-    <!-- Scrollable List of Categories -->
+
+
+   
     <ul class="category-list">
       <li
         *ngFor="let cate of categories"

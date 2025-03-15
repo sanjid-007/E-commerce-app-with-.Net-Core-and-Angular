@@ -1,0 +1,25 @@
+
+
+<nav class="navbar">
+  <button class="navbar-home" (click)="Home()">Home</button>
+</nav>
+
+<div>
+    <h2>Order Details</h2>
+    <form (ngSubmit)="onSubmit()" #orderForm="ngForm">
+      <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" ngModel required />
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" ngModel required />
+      </div>
+      <div>
+        <label for="address">Address</label>
+        <textarea id="address" name="address" ngModel required></textarea>
+      </div>
+      <button type="submit" [disabled]="!orderForm.valid">Submit</button>
+    </form>
+  </div>
+  

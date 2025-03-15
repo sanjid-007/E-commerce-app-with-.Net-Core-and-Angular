@@ -1,16 +1,32 @@
 
-<!-- <ul>
-    <li *ngFor="let cate of products">
-      <button> {{ cate.name }}</button> <br>
-    </li>
-  </ul> -->
+<nav class="navbar">
+  <button class="navbar-home" (click)="Home()">Home</button>
+</nav>
+  
+  <div class="product-list">
 
-  <section class="product-section">
-    <h2 class="text-center text-primary">Products</h2>
-    <ul class="product-list">
-      <li *ngFor="let cate of products" class="product-item">
-        <button class="product-button">{{ cate.name }}</button>
+    <ul>
+      <li *ngFor="let product of products">
+        <button (click)="productfunction(product)">{{ product.name }}</button><br />
+        <img
+          *ngIf="product.image"
+          [src]="'data:image/png;base64,' + product.image"
+          alt="{{ product.name }}"
+          width="200"
+        />
+        <p>Price: {{ product.price }}</p>
       </li>
     </ul>
-  </section>
+  
+    
+    <div class="pagination-controls">
+      <button (click)="previousPage()" [disabled]="currentPage === 1">
+        Previous
+      </button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Next
+      </button>
+    </div>
+  </div>
   
